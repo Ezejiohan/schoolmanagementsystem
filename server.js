@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require('express');
 const { route } = require('./route/teacherRoute');
 const { studentRoute } = require('./route/studentRoute');
@@ -8,7 +10,7 @@ require('./database/database');
 app.use(express.json());
 app.use('/', route);
 app.use('/', studentRoute)
-app.listen(PORT, () => {
-    console.log('app listening on PORT ' + PORT);
+app.listen(process.env.PORT, () => {
+    console.log('app listening on PORT ' + process.env.PORT);
     
 });

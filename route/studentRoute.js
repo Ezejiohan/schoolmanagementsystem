@@ -1,5 +1,5 @@
 const express = require('express');
-const { createStudent, studentLogin, getStudents, deleteStudent, updateStudent } = require('../Controller/student');
+const { createStudent, studentLogin, getStudents, deleteStudent, updateStudent, getOneStudent } = require('../Controller/student');
 const { authenticate } = require("../middleware/authenticate");
 
 const studentRoute = express.Router();
@@ -10,6 +10,7 @@ studentRoute.get("/", (req, res) => {
 studentRoute.post("/api/createStudent", authenticate, createStudent);
 studentRoute.post("/api/studentlogin", authenticate, studentLogin);
 studentRoute.get("/api/getStudents", authenticate, getStudents);
+studentRoute.get("/api/getOneStudent/:id", authenticate, getOneStudent);
 studentRoute.delete("/api/deleteStudent", authenticate, deleteStudent);
 studentRoute.put("/api/update", authenticate, updateStudent);
 
