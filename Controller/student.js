@@ -2,7 +2,6 @@ const studentModel = require("../models/studentModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 const createStudent = async (req, res) => {
   try {
     const teacher = req.teacher;
@@ -41,9 +40,8 @@ const createStudent = async (req, res) => {
     res.status(500).json({
       message: error.message,
     });
-
   }
-}
+};
 
 const studentLogin = async (req, res) => {
   try {
@@ -88,10 +86,8 @@ const studentLogin = async (req, res) => {
     res.status(500).json({
       message: error.message,
     });
-
   }
-
-}
+};
 
 const getStudents = async (req, res) => {
   try {
@@ -99,7 +95,7 @@ const getStudents = async (req, res) => {
     if (!teacher) {
       res.status(404).json({
         message: 'Only teachers can see all students'
-      })
+      });
     }
       const allStudents = await studentModel.find();
 
@@ -108,6 +104,29 @@ const getStudents = async (req, res) => {
         numberOfStudents: allStudents.length,
         data: allStudents
       });
+  } catch (error) {
+    res.status(500).json({
+      status: "Failed",
+      message: error.message
+    });
+  }
+};
+
+const getOneStudent = async (req, res) => {
+  try {
+    const teacher = req.teacher;
+    const student = await studentModel.findById(req.params.id);
+    if (!student) {
+      res.status(404).json({
+        message: 'Student not found'
+      })
+    } else {
+      res.status(200).json({
+        status: "Success",
+        data: student
+      });
+    }
+    
   } catch (error) {
     res.status(500).json({
       status: "Failed",
@@ -164,6 +183,6 @@ const updateStudent = async (req, res) => {
       message: error.message
     });
   }
-}
+};
 
-module.exports = { createStudent, studentLogin, getStudents, deleteStudent, updateStudent }
+module.exports = { createStudent, studentLogin, getStudents, deleteStudent, updateStudent, getOneStudent }

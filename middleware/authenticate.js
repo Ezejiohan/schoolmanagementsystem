@@ -16,7 +16,7 @@ const authenticate = async (req, res, next) => {
       // split the token from the bearer
       const token = hasAuthorization.split(' ') [1];
       // confirming validity of token
-      const decodedToken = jwt.verify(token, "secretKey");
+      const decodedToken = jwt.verify(token, process.env.TOKEN);
       
       // getting teacher through token
       const teacher = await TeacherModel.findById(decodedToken.id);
